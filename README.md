@@ -2,6 +2,24 @@
 
 Aplicación web para gestionar candidatos y enviar mensajes.
 
+Usuario ya creado para prueba ( Aunque puede registrar cuantos quiera):
+ Usuario: admin@admin.com
+ Password: Testeo123.
+
+### IMPORTANTE
+El endpoint  https://private-73f5b0-challengefront.apiary-mock.com/messages proporcionado en el pdf del 
+challenge devuelve siempre el mismo response:
+{
+    "id": 42,
+    "role": "Frontend",
+    "msj": "Estoy interesado en participar del challenge de UI, ¿hay lineamientos?",
+    "submitted_at": "2025-10-09T17:00:00.000Z",
+    "status": "received"
+}
+
+Independientemente de que body se le mande, cambiando role, poniendo uno no valido, un number, o cualquier cosa, siempre responde eso. Por lo que tome la decision de hacer la respuesta desde la propia api de next, para simular el flujo y poder tener el caso 422.
+
+
 ## 🎨 Stack Tecnológico
 
 - **Framework**: Next.js 16 (App Router)

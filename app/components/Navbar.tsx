@@ -6,12 +6,7 @@ import Image from 'next/image';
 import { getTokenFromStorage, removeTokenFromStorage } from '../helpers/jwt';
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return !!getTokenFromStorage();
-    }
-    return false;
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -45,7 +40,6 @@ export default function Navbar() {
     return (
       <nav className="w-full bg-white border-b border-gray-100 relative">
         <div className="px-4 sm:px-6 py-4 flex items-center justify-between h-16">
-          {/* Logo y título */}
           <div className="flex items-center gap-2 sm:gap-3">
             <Image
               src="/Logo.svg"
@@ -63,7 +57,6 @@ export default function Navbar() {
             </h1>
           </div>
 
-          {/* Desktop menu */}
           <div className="hidden md:flex items-center gap-4 lg:gap-6">
             <button
               onClick={() => navigateTo('/home')}
@@ -93,7 +86,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -131,7 +123,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
             <div className="px-4 py-2 space-y-1">
