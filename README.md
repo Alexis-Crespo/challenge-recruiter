@@ -24,6 +24,7 @@ Independientemente de que body se le mande, cambiando role, poniendo uno no vali
 
 - **Framework**: Next.js 16 (App Router)
 - **UI**: React 19
+- **BBDD**: SUPABASE, para logica de login y register
 - **Lenguaje**: TypeScript
 - **Estilos**: Tailwind CSS
 - **Componentes UI**: Radix UI + shadcn/ui
