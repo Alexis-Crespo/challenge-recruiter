@@ -1,0 +1,15 @@
+IDE utilizado: Cursor.
+
+Prompts
+ -  Buenas practicas:
+    - " Analiza el proyecto, y recomendame mejoras, enfocadas en buenas practicas,
+    tanto como separacion de responsabildiades, abstracciones, estados, todo lo que
+    creas que se pueda mejorar "
+
+- UI:
+ -  "Necesito que esta pagina (home), sea responsive, que no tenga layout shifting, 
+ y que sea lo mas minimalista posible"
+
+-Tests: 
+    "Creame test unitarios de los siguientes componentes, utils y helpers @navbar, @errorHandler, @jwt"
+
