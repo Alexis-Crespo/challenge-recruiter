@@ -6,7 +6,7 @@ import {
   decodeToken,
 } from '../jwt';
 
-// Mock de document.cookie
+
 Object.defineProperty(document, 'cookie', {
   writable: true,
   value: '',
@@ -68,8 +68,8 @@ describe('JWT Helpers', () => {
 
   describe('decodeToken', () => {
     it('debe decodificar un token JWT válido', () => {
-      // Token JWT de ejemplo (header.payload.signature)
-      // Payload: { "sub": "123", "name": "Test User", "iat": 1516239022 }
+ 
+    
       const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJuYW1lIjoiVGVzdCBVc2VyIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
       const decoded = decodeToken(token);

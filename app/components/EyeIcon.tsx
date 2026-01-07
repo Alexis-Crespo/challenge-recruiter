@@ -16,7 +16,7 @@ export default function EyeIcon({
     >
       {isVisible ? (
         <>
-          {/* Ojo abierto (sin tachar) - cuando el password ES visible */}
+          
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -31,7 +31,7 @@ export default function EyeIcon({
           />
         </>
       ) : (
-        /* Ojo tachado - cuando el password está oculto */
+      
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

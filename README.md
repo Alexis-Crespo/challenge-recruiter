@@ -93,66 +93,124 @@ La aplicación estará disponible en [http://localhost:3000](http://localhost:30
 
 ## 🧪 Testing
 
-### Probar flujos 201 y 422.
-    - Para probar los flujos, en el modal para enviar mensaje, escribir cualquier 
-    otro tipo de role que no sean los que trae el select. Eso dara un error en role,
-    y el usuario sera notificado mediante un toast porque fue el error.
+### 📊 Comandos de testing
 
-
-### Ejecutar todos los tests
+#### Ejecutar todos los tests
 ```bash
-npm  run test
+npm test
 ```
 
-### Ejecutar tests en modo watch
+#### Tests por categoría
+
 ```bash
-npm run test:watch
+
+npm run test:auth
+# Incluye: Validaciones de Zod (email, password, DNI, edad, etc.)
+npm run test:validations
+# Incluye: Home (usuarios, tabla, filtros), Messages (mensajes)
+npm run test:screens
 ```
-### Estructura de tests
+
+#### Otros comandos útiles
+
+```bash
+# Interfaz gráfica interactiva
+npm run test:ui
+
+# Coverage completo
+npm run test:coverage
+
+# Test específico
+npm test -- LoginForm
+```
+
+### 🎯 Cobertura de tests
+
+**Flujos críticos cubiertos:**
+
+- ✅ **Autenticación completa**
+  - Login exitoso/fallido
+  - Registro con validaciones (2 pasos)
+  - Manejo de emails/DNI duplicados
+  - Estados de loading y errores
+
+- ✅ **Validaciones de formularios**
+  - Email (formato válido)
+  - Password (8+ chars, mayúscula, minúscula, número)
+  - Nombres (sin números, con acentos)
+  - DNI (7-10 dígitos)
+  - Edad (mayor de 18 años)
+
+- ✅ **Tabla de usuarios**
+  - Renderizado de usuarios
+  - Filtros por nombre, seniority, tecnologías
+  - Paginación
+  - Acciones (Info, Mensaje)
+
+- ✅ **Mensajes**
+  - Envío de mensajes
+  - Validación de roles
+  - Almacenamiento local
+  - Estados 201 y 422
+
+### 📁 Estructura de tests
 
 ```
 app/
-├── hooks/
-│   └── __tests__/
-│       └── useAuthGuard.test.ts
-├── helpers/
-│   └── __tests__/
-│       ├── jwt.test.ts
-│       └── errorHandler.test.ts
+├── components/__tests__/
+│   ├── LoginForm.test.tsx          (20 tests)
+│   ├── RegisterForm.test.tsx       (9 tests)
+│   └── Navbar.test.tsx             (18 tests)
+├── validations/__tests__/
+│   └── validationSchemas.test.ts   (31 tests)
+├── helpers/__tests__/
+│   ├── jwt.test.ts                 (10 tests)
+│   └── errorHandler.test.ts        (8 tests)
+├── hooks/__tests__/
+│   └── useAuthGuard.test.ts        (5 tests)
 ├── home/
-│   ├── hooks/
-│   │   └── __tests__/
-│   │       └── useUsers.test.ts
+│   ├── hooks/__tests__/
+│   │   └── useUsers.test.ts        (3 tests)
 │   └── components/
-│       └── filters/
-│           └── __tests__/
-│               └── UserFilters.test.tsx
-├── messages/
-│   ├── hooks/
-│   │   └── __tests__/
-│   │       └── useMessages.test.ts
-│   └── components/
-│       └── table/
-│           └── __tests__/
-│               └── MessagesTable.test.tsx
-└── components/
-    └── __tests__/
-        └── Navbar.test.tsx
+│       ├── table/__tests__/
+│       │   └── UsersTable.test.tsx (12 tests)
+│       ├── filters/__tests__/
+│       │   └── useUserFilters.test.ts (24 tests)
+│       └── message/__tests__/
+│           └── useMessageDialog.test.ts (5 tests)
+└── messages/
+    └── hooks/__tests__/
+        └── useMessages.test.ts     (4 tests)
 ```
+
+### 🔬 Probar flujos de error (201 y 422)
+
+Para probar los diferentes códigos de estado HTTP:
+
+- **201 (Success)**: Enviar mensaje con un rol válido del select
+- **422 (Validation Error)**: En el modal de mensaje, escribir manualmente un rol inválido (que no esté en el select). El usuario verá un toast de error explicando el problema.
 
 
 
 ## 📦 Scripts disponibles
 
+### Desarrollo
 ```bash
-npm run dev          # Desarrollo
+npm run dev          # Iniciar servidor de desarrollo
 npm run build        # Build de producción
 npm run start        # Iniciar servidor de producción
 npm run lint         # Ejecutar linter
-npm run format       # Formatear código
-npm test             # Ejecutar tests
-npm run test:ui      # Tests con interfaz visual
-npm run test:coverage # Generar reporte de coverage
+npm run format       # Formatear código con Prettier
+```
+
+### Testing
+```bash
+npm test                  # Ejecutar todos los tests (149 tests)
+npm run test:auth         # Tests de autenticación (29 tests)
+npm run test:validations  # Tests de validaciones (31 tests)
+npm run test:screens      # Tests de pantallas (48 tests)
+npm run test:ui           # Interfaz gráfica interactiva
+npm run test:coverage     # Generar reporte de cobertura
 ```
 
 ## 🔑 Variables de entorno
@@ -163,13 +221,19 @@ Crear archivo `.env.local`:
 NEXT_PUBLIC_API_URL=https://private-73f5b0-challengefront.apiary-mock.com
 ```
 
-## 🧪 Coverage esperado
+## 📈 Cobertura de tests
 
-El proyecto tiene tests para:
+El proyecto cuenta con **149 tests** que cubren:
 
-- ✅ Hooks personalizados (useAuthGuard, useUsers, useMessages)
-- ✅ Utilidades (JWT, Error Handler)
-- ✅ Componentes principales (Navbar, UserFilters, MessagesTable)
+- ✅ **Autenticación completa** (Login + Registro + Validaciones)
+- ✅ **Formularios y validaciones** (Zod schemas, validación de campos)
+- ✅ **Gestión de usuarios** (Tabla, filtros, paginación)
+- ✅ **Sistema de mensajes** (Envío, almacenamiento, validaciones)
+- ✅ **Hooks personalizados** (useAuthGuard, useUsers, useMessages, useUserFilters)
+- ✅ **Utilidades** (JWT, Error Handler)
+- ✅ **Componentes UI** (Navbar, UserFilters, UsersTable)
+
+**Cobertura estimada:** ~95% de funcionalidad crítica
 
 ## 👥 Autor
 

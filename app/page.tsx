@@ -1,13 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
 import PromotionalText from './components/PromotionalText';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
+import { getTokenFromStorage } from './helpers/jwt';
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Si el usuario ya tiene token, redirigir a /home
+    const token = getTokenFromStorage();
+    if (token) {
+      router.push('/home');
+    }
+  }, [router]);
 
   return (
     <div className="min-h-screen ">

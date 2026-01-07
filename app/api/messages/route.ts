@@ -1,3 +1,5 @@
+// ESTE ENDPOINT ESTA HECHO PARA REEMPLAZAR AL QUE NO FUNCIONA
+
 import { NextRequest, NextResponse } from 'next/server';
 
 const VALID_ROLES = ['Frontend', 'Backend', 'Fullstack', 'DBA'];

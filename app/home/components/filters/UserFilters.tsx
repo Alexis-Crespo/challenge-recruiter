@@ -8,17 +8,20 @@ export function UserFilters() {
     setNameFilter,
     seniorityFilters,
     languageFilters,
+    showOnlyFavorites,
     toggleSeniorityFilter,
     toggleLanguageFilter,
+    toggleShowOnlyFavorites,
     clearFilters,
     hasActiveFilters,
     allUsers,
     filteredUsers,
+    favorites,
   } = useFiltersContext();
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
       <div className="flex flex-col gap-3">
-        {/* Primera fila: Nombre, Limpiar y Seniority */}
+        {/* Primera fila: Nombre, Limpiar, Favoritos y Seniority */}
         <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
           <div className="flex gap-2">
             <input
@@ -29,6 +32,17 @@ export function UserFilters() {
               placeholder="Buscar por nombre..."
               className="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fb6731]/50 focus:border-[#fb6731] outline-none transition-colors text-sm"
             />
+            <button
+              onClick={toggleShowOnlyFavorites}
+              className={`px-4 py-2 text-xl rounded-lg transition-all duration-200 ${
+                showOnlyFavorites
+                  ? 'bg-[#fb6731] text-white shadow-md scale-105'
+                  : 'bg-white text-gray-400 border border-gray-300 hover:border-[#fb6731]/50 hover:text-[#fb6731]'
+              }`}
+              title={showOnlyFavorites ? 'Mostrar todos' : 'Mostrar favoritos'}
+            >
+              ❤️
+            </button>
             <button
               onClick={clearFilters}
               disabled={!hasActiveFilters}

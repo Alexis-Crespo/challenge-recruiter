@@ -29,10 +29,11 @@ export const languageIcons: Record<string, string> = {
   sql: '/icons/sql.svg',
 };
 
-export function useUserFilters(allUsers: User[]) {
+export function useUserFilters(allUsers: User[], favorites: Set<string>) {
   const [nameFilter, setNameFilter] = useState('');
   const [seniorityFilters, setSeniorityFilters] = useState<Set<'JR' | 'SSR' | 'SR'>>(new Set());
   const [languageFilters, setLanguageFilters] = useState<Set<string>>(new Set());
+  const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
 
   const toggleSeniorityFilter = (level: 'JR' | 'SSR' | 'SR') => {
     setSeniorityFilters((prev) => {
@@ -59,14 +60,24 @@ export function useUserFilters(allUsers: User[]) {
     });
   };
 
+  const toggleShowOnlyFavorites = () => {
+    setShowOnlyFavorites((prev) => !prev);
+  };
+
   const clearFilters = () => {
     setNameFilter('');
     setSeniorityFilters(new Set());
     setLanguageFilters(new Set());
+    setShowOnlyFavorites(false);
   };
 
   const filteredUsers = useMemo(() => {
     let filtered = [...allUsers];
+
+    // Filtrar por favoritos
+    if (showOnlyFavorites) {
+      filtered = filtered.filter((user) => favorites.has(user.username));
+    }
 
     // Filtrar por nombre
     if (nameFilter.trim()) {
@@ -101,17 +112,19 @@ export function useUserFilters(allUsers: User[]) {
     }
 
     return filtered;
-  }, [allUsers, nameFilter, seniorityFilters, languageFilters]);
+  }, [allUsers, nameFilter, seniorityFilters, languageFilters, showOnlyFavorites, favorites]);
 
-  const hasActiveFilters = nameFilter !== '' || seniorityFilters.size > 0 || languageFilters.size > 0;
+  const hasActiveFilters = nameFilter !== '' || seniorityFilters.size > 0 || languageFilters.size > 0 || showOnlyFavorites;
 
   return {
     nameFilter,
     setNameFilter,
     seniorityFilters,
     languageFilters,
+    showOnlyFavorites,
     toggleSeniorityFilter,
     toggleLanguageFilter,
+    toggleShowOnlyFavorites,
     clearFilters,
     filteredUsers,
     hasActiveFilters,

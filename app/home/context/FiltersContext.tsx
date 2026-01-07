@@ -4,6 +4,7 @@ import React, { createContext, useContext, ReactNode } from 'react';
 import { type User } from '@/utils/api/users';
 import { useUserFilters } from '../components/filters/useUserFilters';
 import { useUsersPagination } from '../components/pagination/useUsersPagination';
+import { useFavorites } from '../hooks/useFavorites';
 
 type FiltersContextType = {
   allUsers: User[];
@@ -15,12 +16,19 @@ type FiltersContextType = {
   setNameFilter: (value: string) => void;
   seniorityFilters: Set<'JR' | 'SSR' | 'SR'>;
   languageFilters: Set<string>;
+  showOnlyFavorites: boolean;
   hasActiveFilters: boolean;
   
   // Funciones de filtros
   toggleSeniorityFilter: (level: 'JR' | 'SSR' | 'SR') => void;
   toggleLanguageFilter: (language: string) => void;
+  toggleShowOnlyFavorites: () => void;
   clearFilters: () => void;
+  
+  // Favoritos
+  favorites: Set<string>;
+  toggleFavorite: (username: string) => void;
+  isFavorite: (username: string) => boolean;
   
   // Estado de paginación
   currentPage: number;
@@ -37,18 +45,23 @@ type FiltersProviderProps = {
 }
 
 export function FiltersProvider({ children, allUsers }: FiltersProviderProps) {
+  // Hook de favoritos
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+
   // Hook de filtros
   const {
     nameFilter,
     setNameFilter,
     seniorityFilters,
     languageFilters,
+    showOnlyFavorites,
     toggleSeniorityFilter,
     toggleLanguageFilter,
+    toggleShowOnlyFavorites,
     clearFilters,
     filteredUsers,
     hasActiveFilters,
-  } = useUserFilters(allUsers);
+  } = useUserFilters(allUsers, favorites);
 
   // Hook de paginación (depende de filteredUsers)
   const { currentPage, totalPages, currentUsers, getPageNumbers, handlePageChange } =
@@ -65,12 +78,19 @@ export function FiltersProvider({ children, allUsers }: FiltersProviderProps) {
     setNameFilter,
     seniorityFilters,
     languageFilters,
+    showOnlyFavorites,
     hasActiveFilters,
     
     // Funciones de filtros
     toggleSeniorityFilter,
     toggleLanguageFilter,
+    toggleShowOnlyFavorites,
     clearFilters,
+    
+    // Favoritos
+    favorites,
+    toggleFavorite,
+    isFavorite,
     
     // Paginación
     currentPage,
